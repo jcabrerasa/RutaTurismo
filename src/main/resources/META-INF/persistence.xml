@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.ruta.turismo_RutaTurismo_war_1.0-SNAPSHOTPU" transaction-type="JTA">
+    <jta-data-source>java:app/jdbc/rutas</jta-data-source>
+    <class>com.ruta.turismo.rutaturismo.Categoria</class>
+    <class>com.ruta.turismo.rutaturismo.Operador</class>
+    <class>com.ruta.turismo.rutaturismo.Ruta</class>
+    <class>com.ruta.turismo.rutaturismo.Rutaturista</class>
+    <class>com.ruta.turismo.rutaturismo.Rutausuario</class>
+    <class>com.ruta.turismo.rutaturismo.Trayecto</class>
+    <class>com.ruta.turismo.rutaturismo.Turista</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <validation-mode>NONE</validation-mode>
+    <properties/>
+  </persistence-unit>
+</persistence>

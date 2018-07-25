@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+
+    </h:head>
+
+    <h:body>
+
+
+        <p:growl id="growl" life="3000" />
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="100" style="z-index:-80; background: rgba(5,110,178,0.95) none repeat scroll 0% 0% !important;" >    
+                <div class="row" >
+                    <div class="col-sm-4" >
+
+                        <div class="logoAccesos"> 
+                            <div style="float: left; padding-top: 5px; padding-left: 100px;">
+                                <a href="http://cuencaecuador.com.ec/" target="_blank">
+                                    <h:graphicImage library="images" name="logo-cuenca-blanco-150px_0.png" style="max-width: 70%;"  /> 
+                                </a>
+                               
+                            </div>
+                       </div> 
+
+                    </div>
+                    <div class="col-sm-4" > 
+                         <a href="/RutaTurismo" >
+                        <h4 style="font-size: 20px; color: white; padding-top: 30px; padding-left: 60px;">GESTIÓN RUTAS CUENCA</h4>
+                         </a>
+                    </div>
+                    <div class="col-sm-4" >
+                          <div class="logoAccesos"> 
+                            <div style="float: right; padding-top: 40px; padding-right: 130px;">
+                                <a href="http://www.cuenca.gov.ec/" target="_blank">
+                                    <h:graphicImage library="images" name="CUENCA.png" style="max-width: 70%;"  /> 
+                                </a>
+                               
+                            </div>
+                       </div> 
+                        
+                    </div>
+                </div>
+
+            </p:layoutUnit>
+            <p:layoutUnit position="west"  header="MENÚ" resizable="true" closable="false" collapsible="true" collapsed="true">
+                <h:form>
+                 <p:menu>
+                    <p:submenu label="PARAMETROS">
+                        <p:menuitem value="Categorías" action="/categoria/List" />
+                         <p:menuitem  action="/operador/List" value="Operador"/>
+                         <p:menuitem action="/turista/List" value="Turistas"/>
+
+                         
+
+                    </p:submenu>
+                    <p:submenu label="FUNCIONALIDAD">
+                         <p:menuitem action="/ruta/List" value="Gestión Rutas"/>
+                         <p:menuitem action="/rutausuario/List" value="Gestión Rutas Turistas"/>
+                      
+                         
+                       
+                    </p:submenu>
+                </p:menu>
+                    </h:form>
+                
+                
+
+             
+               
+               
+               
+               
+
+
+
+            </p:layoutUnit>
+
+<!--            <p:layoutUnit position="south" size="120">
+                <center>
+                 <h:graphicImage library="images" name="footer.png" style="max-width: 30%;"  />  
+                 </center>
+            </p:layoutUnit>-->
+
+
+            <p:layoutUnit position="center" id="cuerpo" >  
+
+                <ui:insert name="body" />
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

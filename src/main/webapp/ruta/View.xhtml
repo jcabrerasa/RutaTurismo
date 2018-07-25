@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RutaViewDlg" widgetVar="RutaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRutaTitle}">
+            <h:form id="RutaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rutaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRutaLabel_idRuta}"/>
+                        <h:outputText value="#{rutaController.selected.idRuta}" title="#{bundle.ViewRutaTitle_idRuta}"/>
+                         <p:outputLabel value="Titulo" for="titulo" />
+                        <p:outputLabel  id="titulo" value="#{rutaController.selected.titulo}" title="titulo" />
+                        <h:outputText value="#{bundle.ViewRutaLabel_descripcion}"/>
+                        <h:outputText value="#{rutaController.selected.descripcion}" title="#{bundle.ViewRutaTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewRutaLabel_tempoEstimado} Hora:"/>
+                        <h:outputText value="#{rutaController.selected.tempoEstimado}" title="#{bundle.ViewRutaTitle_tempoEstimado}"/>
+                        
+                        <h:outputText value="#{bundle.ViewRutaLabel_horaInicial}"/>
+                        <h:outputText value="#{rutaController.selected.horaInicial}" title="#{bundle.ViewRutaTitle_horaInicial}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRutaLabel_horafinal}"/>
+                        <h:outputText value="#{rutaController.selected.horafinal}" title="#{bundle.ViewRutaTitle_horafinal}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRutaLabel_fechahorario}"/>
+                        <h:outputText value="#{rutaController.selected.fechahorario}" title="#{bundle.ViewRutaTitle_fechahorario}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRutaLabel_idCategoria}"/>
+                        <h:outputText value="#{rutaController.selected.idCategoria.nombre}" title="#{bundle.ViewRutaTitle_idCategoria}"/>
+                        <p:outputLabel value="Estado" for="estado" />
+                        <p:selectOneMenu id="estado" disabled="true" value="#{rutaController.selected.estado}" required="true" requiredMessage="Campo Obligatorio">
+                            <f:selectItem itemLabel="Activo"                            
+                                           itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"                            
+                                           itemValue="I"/>
+                        </p:selectOneMenu>
+                         <h:outputText value="Color: " />
+                          <p:outputLabel value="#{rutaController.selected.color}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RutaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

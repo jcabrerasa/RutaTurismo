@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TuristaEditDlg" widgetVar="TuristaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTuristaTitle}">
+            <h:form id="TuristaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{turistaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditTuristaLabel_idTurista}" for="idTurista" />
+                        <p:outputLabel id="idTurista" value="#{turistaController.selected.idTurista}" title="#{bundle.EditTuristaTitle_idTurista}" />
+                        <p:outputLabel value="#{bundle.EditTuristaLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{turistaController.selected.nombres}" title="#{bundle.EditTuristaTitle_nombres}" />
+                        <p:outputLabel value="#{bundle.EditTuristaLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{turistaController.selected.telefono}" title="#{bundle.EditTuristaTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.EditTuristaLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{turistaController.selected.email}" title="#{bundle.EditTuristaTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditTuristaLabel_referencia}" for="referencia" />
+                        <p:inputText id="referencia" value="#{turistaController.selected.referencia}" title="#{bundle.EditTuristaTitle_referencia}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{turistaController.update}" value="#{bundle.Save}" update="display,:TuristaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TuristaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TuristaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

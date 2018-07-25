@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+  
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+
+ 
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListRutaTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhKRPhfU-EX44-VAa5r6b6S_xTa1XOoHU" type="text/javascript"></script>  
+             
+           
+          
+           
+            
+          <h:form id="RutaListForm">    
+              <p:accordionPanel id="accpanel">
+        <p:ajax event="tabChange" listener="#{rutaController.onTabChange}" update=":growl, :RutaListForm" />
+        <p:ajax event="tabClose" listener="#{rutaController.onTabClose}" update=":growl,   :RutaListForm" />
+ 
+        <p:tab title="Gestión de Rutas">
+            <p:panel  styleClass="panelTabla" >
+                <h7>
+                   <h:outputText value="Rutas"  /> 
+                </h7>
+            </p:panel>
+          
+                <p:panel header="#{bundle.ListRutaTitle}">
+                    <p:dataTable id="datalist" value="#{rutaController.items}" var="item"
+                                 selectionMode="single" selection="#{rutaController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idRuta}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect" listener="#{trayectoController.prepareCreate}"   update="createButton viewButton editButton deleteButton, :RutaListForm:accpanel:panelmap" />
+                        <p:ajax event="rowUnselect" listener="#{trayectoController.selectednull}" update="createButton viewButton editButton deleteButton, :RutaListForm:accpanel:panelmap"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_idRuta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idRuta}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Título"/>
+                            </f:facet>
+                            <h:outputText value="#{item.titulo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_tempoEstimado} Hora:"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tempoEstimado}"/>
+                        </p:column>
+                       
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_horaInicial}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.horaInicial}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_horafinal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.horafinal}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_fechahorario}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechahorario}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRutaTitle_idCategoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCategoria.nombre}"/>
+                        </p:column>
+                            <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <h:outputText value="#{item.estado}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Imagen"/>
+                            </f:facet>
+                             <p:commandLink value="Descarga" actionListener="#{rutaController.downloadFoto(item)}" ajax="false">
+                                            <p:fileDownload value="#{rutaController.file}" />
+                              </p:commandLink>
+                           
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{rutaController.prepareCreate}" update=":RutaCreateForm" oncomplete="PF('RutaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RutaViewForm" oncomplete="PF('RutaViewDialog').show()" disabled="#{empty rutaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RutaEditForm" oncomplete="PF('RutaEditDialog').show()" disabled="#{empty rutaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{rutaController.destroy}" update=":growl,datalist" disabled="#{empty rutaController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+           
+        </p:tab>
+        <p:tab id="tab2" title="Gestión Trayectos">
+              <p:panel  styleClass="panelTabla" >
+                <h7>
+                    
+                    <h:outputText value="Ruta: #{rutaController.selected.titulo} "  /> 
+                  ->
+                     <h:outputText value="Trayectos"  /> 
+                </h7>
+            </p:panel>
+            <p:panel id="panelmap" >
+                <c:if test="#{trayectoController.selected!=null}">
+                    <f:view contentType="text/html">
+                        <p:panelGrid columns="2">
+                            <p:panel style="background-color: #d93c3c;"  ></p:panel>
+                        
+                            <p:outputLabel value="Inicio"   />
+                            <p:panel styleClass="panelTabla"  ></p:panel>
+                        
+                          <p:outputLabel value="Fin"   />
+                          </p:panelGrid>
+                        <p:gmap id="gmap" center="-2.897028,-79.004416" zoom="15"  type="HYBRID" style="width:100%;height:400px" 
+                                model="#{trayectoController.emptyModel}"  onPointClick="handlePointClick(event);" widgetVar="map" >
+
+                            
+                                    <p:ajax event="overlaySelect" listener="#{trayectoController.onMarkerSelect}" />
+ 
+                                <p:gmapInfoWindow id="infoWindow">
+                                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                                                                                   
+                                            
+                                            
+                                            <!--ventama para editar-->
+                                          
+                                            <h:panelGroup id="panelmapa">
+                                            <p:panelGrid columns="4" >
+
+                                                    <p:outputLabel value="#{bundle.CreateTrayectoLabel_descripcion}" for="descripcion" />
+                                                    <p:inputTextarea id="descripcion" value="#{trayectoController.selected.descripcion}" title="#{bundle.CreateTrayectoTitle_descripcion}" rows="6" cols="33" />
+                                                    <p:outputLabel value="Dirección" for="direccion" />
+                                                    <p:inputTextarea id="direccion" value="#{trayectoController.selected.direccion}" title="Dirección" rows="6" cols="33" />
+
+                                                    <p:outputLabel value="#{bundle.CreateTrayectoLabel_tiempovisita} Minutos:" for="tiempovisita" />
+                                                    <p:inputText id="tiempovisita" value="#{trayectoController.selected.tiempovisita}" title="#{bundle.CreateTrayectoTitle_tiempovisita}" />
+                                                    <p:outputLabel value="Costo" for="costo" />
+                                                    <p:inputText id="costo" value="#{trayectoController.selected.costovisita}" title="Costo" />
+                                                   <p:outputLabel value="#{bundle.CreateTrayectoLabel_latitud}" for="lat" />
+                                                   <p:inputText id="lat"  value="#{trayectoController.selected.latitud}" />
+                                                <p:outputLabel value="#{bundle.CreateTrayectoLabel_longitud}" for="lng" />
+                                                <p:inputText id="lng"  value="#{trayectoController.selected.longitud}" />
+
+
+                                                   <p:outputLabel value="Hora Atención" for="horaatencion" />
+                                                   <p:calendar id="horaatencion" pattern="HH:mm:ss" value="#{trayectoController.selected.horarioatencion}" title="horaatencion"  showOn="button"/>
+
+                                                   <p:outputLabel value="Orden" for="orden" />
+                                                   <p:inputText id="orden" value="#{trayectoController.selected.orden}" title="orden" />
+
+                                                   <h:outputText value="Imagen 500x500: " />
+                                                        <p:fileUpload fileUploadListener="#{trayectoController.addImagen}" mode="advanced"
+                                                          update="growl" auto="true" sizeLimit="1048576" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                                                </p:panelGrid>
+                                                <p:commandButton actionListener="#{trayectoController.update()}" value="#{bundle.Save}" update=":growl" />
+                                                  <p:commandButton value="Descarga" actionListener="#{trayectoController.downloadFoto(trayectoController.selected)}" ajax="false">
+                                                                <p:fileDownload value="#{trayectoController.file}" />
+                                                  </p:commandButton>
+                                               
+
+
+                                            </h:panelGroup>
+
+                                 <!--*********************-->
+                                            
+                                            
+
+                                    </p:outputPanel>
+                                </p:gmapInfoWindow>
+                        </p:gmap>
+
+
+                     </f:view>
+                 </c:if>
+            </p:panel>
+        </p:tab>
+
+    </p:accordionPanel>
+       </h:form>   
+         <p:dialog  widgetVar="dlg" showEffect="fade" modal="true" appendTo="@(body)">
+            <h:form prependId="false">
+                <h:panelGroup id="panelmapa">
+                <p:panelGrid columns="4" >
+                       
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea id="descripcion" value="#{trayectoController.selected.descripcion}" title="#{bundle.CreateTrayectoTitle_descripcion}" rows="6" cols="33" />
+                        <p:outputLabel value="Dirección" for="direccion" />
+                        <p:inputTextarea id="direccion" value="#{trayectoController.selected.direccion}" title="Dirección" rows="6" cols="33" />
+
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_tiempovisita} Minutos:" for="tiempovisita" />
+                        <p:inputText id="tiempovisita" value="#{trayectoController.selected.tiempovisita}" title="#{bundle.CreateTrayectoTitle_tiempovisita}" />
+                        <p:outputLabel value="Costo" for="costo" />
+                        <p:inputText id="costo" value="#{trayectoController.selected.costovisita}" title="Costo" />
+                       <p:outputLabel value="#{bundle.CreateTrayectoLabel_latitud}" for="lat" />
+                       <p:inputText id="lat"  value="#{trayectoController.selected.latitud}" />
+                    <p:outputLabel value="#{bundle.CreateTrayectoLabel_longitud}" for="lng" />
+                    <p:inputText id="lng"  value="#{trayectoController.selected.longitud}" />
+                    
+                        
+                       <p:outputLabel value="Hora Atención" for="horaatencion" />
+                       <p:calendar id="horaatencion" pattern="HH:mm:ss" value="#{trayectoController.selected.horarioatencion}" title="horaatencion"  showOn="button"/>
+                       
+                       <p:outputLabel value="Orden" for="orden" />
+                       <p:inputText id="orden" value="#{trayectoController.selected.orden}" title="orden" />
+                      
+                       <h:outputText value="Imagen 500x500: " />
+                            <p:fileUpload fileUploadListener="#{trayectoController.addImagen}" mode="advanced"
+                              update="growl" auto="true" sizeLimit="1048576" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{trayectoController.create}" value="#{bundle.Save}" update=":growl"  oncomplete="markerAddComplete()"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="return cancel()"/>
+                
+                  
+                </h:panelGroup>
+                
+                
+              
+            </h:form>
+        </p:dialog>
+            <script type="text/javascript">
+                 var currentMarker = null;
+
+                 function handlePointClick(event) {
+                     if(currentMarker === null) {
+                         document.getElementById('lat').value = event.latLng.lat();
+                         document.getElementById('lng').value = event.latLng.lng();
+                         currentMarker = new google.maps.Marker({
+                             position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+                         });
+
+                         PF('map').addOverlay(currentMarker);
+                        
+                         PF('dlg').show();
+                     }   
+                 }
+
+                 function markerAddComplete() {
+                     var title = document.getElementById('descripcion');
+                     currentMarker.setTitle(title.value);
+                     title.value = "";
+
+                     currentMarker = null;
+                     PF('dlg').hide();
+                 }
+
+                 function cancel() {
+                     PF('dlg').hide();
+                     currentMarker.setMap(null);
+                     currentMarker = null;
+
+                     return false;
+                 }
+             </script>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+ 
+
+</html>

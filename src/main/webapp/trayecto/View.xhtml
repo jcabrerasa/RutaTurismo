@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TrayectoViewDlg" widgetVar="TrayectoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTrayectoTitle}">
+            <h:form id="TrayectoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{trayectoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_idTrayecto}"/>
+                        <h:outputText value="#{trayectoController.selected.idTrayecto}" title="#{bundle.ViewTrayectoTitle_idTrayecto}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_descripcion}"/>
+                        <h:outputText value="#{trayectoController.selected.descripcion}" title="#{bundle.ViewTrayectoTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_tiempotrayectoria}"/>
+                        <h:outputText value="#{trayectoController.selected.tiempotrayectoria}" title="#{bundle.ViewTrayectoTitle_tiempotrayectoria}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_cordenadas}"/>
+                        <h:outputText value="#{trayectoController.selected.cordenadas}" title="#{bundle.ViewTrayectoTitle_cordenadas}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_latitud}"/>
+                        <h:outputText value="#{trayectoController.selected.latitud}" title="#{bundle.ViewTrayectoTitle_latitud}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_longitud}"/>
+                        <h:outputText value="#{trayectoController.selected.longitud}" title="#{bundle.ViewTrayectoTitle_longitud}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_tiempovisita}"/>
+                        <h:outputText value="#{trayectoController.selected.tiempovisita}" title="#{bundle.ViewTrayectoTitle_tiempovisita}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_tipotrayecto}"/>
+                        <h:outputText value="#{trayectoController.selected.tipotrayecto}" title="#{bundle.ViewTrayectoTitle_tipotrayecto}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_idRuta}"/>
+                        <h:outputText value="#{trayectoController.selected.idRuta}" title="#{bundle.ViewTrayectoTitle_idRuta}"/>
+                        <h:outputText value="#{bundle.ViewTrayectoLabel_idRutaUsuario}"/>
+                        <h:outputText value="#{trayectoController.selected.idRutaUsuario}" title="#{bundle.ViewTrayectoTitle_idRutaUsuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TrayectoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

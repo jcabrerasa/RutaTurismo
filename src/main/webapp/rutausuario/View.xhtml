@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RutausuarioViewDlg" widgetVar="RutausuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRutausuarioTitle}">
+            <h:form id="RutausuarioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rutausuarioController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRutausuarioLabel_idRutaUsuario}"/>
+                        <h:outputText value="#{rutausuarioController.selected.idRutaUsuario}" title="#{bundle.ViewRutausuarioTitle_idRutaUsuario}"/>
+                        <h:outputText value="#{bundle.ViewRutausuarioLabel_estado}"/>
+                        <h:outputText value="#{rutausuarioController.selected.estado}" title="#{bundle.ViewRutausuarioTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewRutausuarioLabel_descripción}"/>
+                        <h:outputText value="#{rutausuarioController.selected.descripción}" title="#{bundle.ViewRutausuarioTitle_descripción}"/>
+                        <h:outputText value="#{bundle.ViewRutausuarioLabel_idTurista}"/>
+                        <h:outputText value="#{rutausuarioController.selected.idTurista}" title="#{bundle.ViewRutausuarioTitle_idTurista}"/>
+                        <h:outputText value="#{bundle.ViewRutausuarioLabel_idOperador}"/>
+                        <h:outputText value="#{rutausuarioController.selected.idOperador}" title="#{bundle.ViewRutausuarioTitle_idOperador}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RutausuarioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

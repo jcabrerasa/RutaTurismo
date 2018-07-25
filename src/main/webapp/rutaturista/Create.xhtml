@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RutaturistaCreateDlg" widgetVar="RutaturistaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRutaturistaTitle}">
+            <h:form id="RutaturistaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rutaturistaController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateRutaturistaLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{rutaturistaController.selected.estado}" title="#{bundle.CreateRutaturistaTitle_estado}" />
+                        <p:outputLabel value="#{bundle.CreateRutaturistaLabel_idRuta}" for="idRuta" />
+                        <p:selectOneMenu id="idRuta" value="#{rutaturistaController.selected.idRuta}" required="true" requiredMessage="#{bundle.EditRutaturistaRequiredMessage_idRuta}">
+                            <f:selectItems value="#{rutaController.itemsAvailableSelectOne}"
+                                           var="idRutaItem"
+                                           itemValue="#{idRutaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRutaturistaLabel_idTurista}" for="idTurista" />
+                        <p:selectOneMenu id="idTurista" value="#{rutaturistaController.selected.idTurista}" required="true" requiredMessage="#{bundle.EditRutaturistaRequiredMessage_idTurista}">
+                            <f:selectItems value="#{turistaController.itemsAvailableSelectOne}"
+                                           var="idTuristaItem"
+                                           itemValue="#{idTuristaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRutaturistaLabel_idOperador}" for="idOperador" />
+                        <p:selectOneMenu id="idOperador" value="#{rutaturistaController.selected.idOperador}" required="true" requiredMessage="#{bundle.EditRutaturistaRequiredMessage_idOperador}">
+                            <f:selectItems value="#{operadorController.itemsAvailableSelectOne}"
+                                           var="idOperadorItem"
+                                           itemValue="#{idOperadorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rutaturistaController.create}" value="#{bundle.Save}" update="display,:RutaturistaListForm:datalist,:growl" oncomplete="handleSubmit(args,'RutaturistaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RutaturistaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

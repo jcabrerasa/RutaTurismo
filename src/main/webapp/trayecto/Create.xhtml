@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TrayectoCreateDlg" widgetVar="TrayectoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTrayectoTitle}">
+            <h:form id="TrayectoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4" rendered="#{trayectoController.selected != null}">
+                       
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea id="descripcion" value="#{trayectoController.selected.descripcion}" title="#{bundle.CreateTrayectoTitle_descripcion}" rows="6" cols="33" />
+                        <p:outputLabel value="Dirección" for="direccion" />
+                        <p:inputTextarea id="direccion" value="#{trayectoController.selected.direccion}" title="Dirección" rows="6" cols="33" />
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_tiempotrayectoria}" for="tiempotrayectoria" />
+                        <p:inputText id="tiempotrayectoria" value="#{trayectoController.selected.tiempotrayectoria}" title="#{bundle.CreateTrayectoTitle_tiempotrayectoria}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_latitud}" for="latitud" />
+                        <p:inputText id="latitud" value="#{trayectoController.selected.latitud}" title="#{bundle.CreateTrayectoTitle_latitud}" />
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_longitud}" for="longitud" />
+                        <p:inputText id="longitud" value="#{trayectoController.selected.longitud}" title="#{bundle.CreateTrayectoTitle_longitud}" />
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_tiempovisita}" for="tiempovisita" />
+                        <p:inputText id="tiempovisita" value="#{trayectoController.selected.tiempovisita}" title="#{bundle.CreateTrayectoTitle_tiempovisita}" />
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_tipotrayecto}" for="tipotrayecto" />
+                        <p:inputText id="tipotrayecto" value="#{trayectoController.selected.tipotrayecto}" title="#{bundle.CreateTrayectoTitle_tipotrayecto}" />
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_idRuta}" for="idRuta" />
+                        <p:selectOneMenu id="idRuta" value="#{trayectoController.selected.idRuta}" required="true" requiredMessage="#{bundle.EditTrayectoRequiredMessage_idRuta}">
+                            <f:selectItems value="#{rutaController.itemsAvailableSelectOne}"
+                                           var="idRutaItem"
+                                           itemValue="#{idRutaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTrayectoLabel_idRutaUsuario}" for="idRutaUsuario" />
+                        <p:selectOneMenu id="idRutaUsuario" value="#{trayectoController.selected.idRutaUsuario}" >
+                            <f:selectItems value="#{rutausuarioController.itemsAvailableSelectOne}"
+                                           var="idRutaUsuarioItem"
+                                           itemValue="#{idRutaUsuarioItem}"/>
+                        </p:selectOneMenu>
+                         
+                         <p:outputLabel value="Costo" for="costo" />
+                        <p:inputText id="costo" value="#{trayectoController.selected.costovisita}" title="Costo" />
+                        <p:outputLabel value="Hora Atención" for="horaatencion" />
+                       <p:calendar id="horaatencion" pattern="HH:mm:ss" value="#{trayectoController.selected.horarioatencion}" title="horaatencion"  showOn="button"/>
+                       
+                       <p:outputLabel value="Orden" for="orden" />
+                       <p:inputText id="orden" value="#{trayectoController.selected.orden}" title="orden" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{trayectoController.create}" value="#{bundle.Save}" update="display,:TrayectoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TrayectoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TrayectoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

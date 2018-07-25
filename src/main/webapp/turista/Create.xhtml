@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TuristaCreateDlg" widgetVar="TuristaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTuristaTitle}">
+            <h:form id="TuristaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{turistaController.selected != null}">
+                       
+                        <p:outputLabel value="#{bundle.CreateTuristaLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{turistaController.selected.nombres}" title="#{bundle.CreateTuristaTitle_nombres}" />
+                        <p:outputLabel value="#{bundle.CreateTuristaLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{turistaController.selected.telefono}" title="#{bundle.CreateTuristaTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.CreateTuristaLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{turistaController.selected.email}" title="#{bundle.CreateTuristaTitle_email}" />
+                        <p:outputLabel value="#{bundle.CreateTuristaLabel_referencia}" for="referencia" />
+                        <p:inputText id="referencia" value="#{turistaController.selected.referencia}" title="#{bundle.CreateTuristaTitle_referencia}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{turistaController.create}" value="#{bundle.Save}" update="display,:TuristaListForm:datalist,:growl" oncomplete="handleSubmit(args,'TuristaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TuristaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

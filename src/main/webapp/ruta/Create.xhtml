@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RutaCreateDlg" widgetVar="RutaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRutaTitle}">
+            <h:form id="RutaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4" rendered="#{rutaController.selected != null}">
+                       
+                        <p:outputLabel value="Titulo" for="titulo" />
+                        <p:inputText id="titulo" value="#{rutaController.selected.titulo}" title="titulo"  required="true" requiredMessage="Campo obligatorio"/>
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea id="descripcion" value="#{rutaController.selected.descripcion}" title="#{bundle.CreateRutaTitle_descripcion}" rows="6" cols="50"  required="true" requiredMessage="Campo obligatorio" />
+                        
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_tempoEstimado} Hora:" for="tempoEstimado" />
+                        <p:inputText id="tempoEstimado" value="#{rutaController.selected.tempoEstimado}" title="#{bundle.CreateRutaTitle_tempoEstimado}"   required="true" requiredMessage="Campo obligatorio"/>
+                        
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_horaInicial}" for="horaInicial" />
+                        <p:calendar id="horaInicial" pattern="HH:mm:ss" value="#{rutaController.selected.horaInicial}" title="#{bundle.EditRutaTitle_horaInicial}"  showOn="button"  required="true" requiredMessage="Campo obligatorio"/>
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_horafinal}" for="horafinal" />
+                        <p:calendar id="horafinal" pattern="HH:mm:ss" value="#{rutaController.selected.horafinal}" title="#{bundle.EditRutaTitle_horafinal}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_fechahorario}" for="fechahorario" />
+                        <p:calendar id="fechahorario" pattern="MM/dd/yyyy" value="#{rutaController.selected.fechahorario}" title="#{bundle.EditRutaTitle_fechahorario}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRutaLabel_idCategoria}" for="idCategoria" />
+                        <p:selectOneMenu id="idCategoria" value="#{rutaController.selected.idCategoria}" required="true" requiredMessage="#{bundle.EditRutaRequiredMessage_idCategoria}">
+                            <f:selectItems value="#{categoriaController.itemsAvailableSelectOne}"
+                                           var="idCategoriaItem"
+                                           itemValue="#{idCategoriaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Estado" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{rutaController.selected.estado}" required="true" requiredMessage="Campo Obligatorio">
+                            <f:selectItem itemLabel="Activo"                            
+                                           itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"                            
+                                           itemValue="I"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Color: " for="color"/>
+                        <p:colorPicker id="color" value="#{rutaController.selected.color}"   required="true" requiredMessage="Campo obligatorio"/>
+                           <h:outputText value="Imagen 500x500: " />
+                            <p:fileUpload fileUploadListener="#{rutaController.addImagen}" mode="advanced"
+                              update="growl" auto="true" sizeLimit="1048576" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+ 
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rutaController.create}" value="#{bundle.Save}" update="display,:RutaListForm:accpanel:datalist,:growl" oncomplete="handleSubmit(args,'RutaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RutaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
